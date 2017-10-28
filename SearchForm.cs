@@ -31,6 +31,7 @@ namespace NewsReader
         //TechRadar
         //The Economist
         //USA Today
+
         string[] allSources = new string[]{ "ars-technica", "bbc-news", "cnn", "google-news",
                    "the-new-york-times", "reuters", "techcrunch", "techradar",
                     "the-economist", "usa-today"};
@@ -69,8 +70,6 @@ namespace NewsReader
         //}
         private void DisplaySites(List<SiteArticles> sites)
         {
-            //System.Text.StringBuilder newText = new System.Text.StringBuilder();
-
             for (int i = 0; i < sites.Count; i++)
             {
                 ArticleResultsBox.DeselectAll();
