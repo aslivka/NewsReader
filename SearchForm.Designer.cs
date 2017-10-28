@@ -34,11 +34,11 @@
             this.ArticleResultsBox = new System.Windows.Forms.RichTextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Search = new System.Windows.Forms.TabPage();
+            this.ButtonExit = new System.Windows.Forms.Button();
             this.Setup = new System.Windows.Forms.TabPage();
             this.ApplyChanges_Button = new System.Windows.Forms.Button();
             this.SiteSelectionList = new System.Windows.Forms.CheckedListBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.ButtonExit = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.Search.SuspendLayout();
             this.Setup.SuspendLayout();
@@ -77,6 +77,7 @@
             this.ArticleResultsBox.Size = new System.Drawing.Size(623, 371);
             this.ArticleResultsBox.TabIndex = 3;
             this.ArticleResultsBox.Text = "";
+            this.ArticleResultsBox.TextChanged += new System.EventHandler(this.ArticleResultsBox_TextChanged);
             // 
             // tabControl1
             // 
@@ -104,6 +105,16 @@
             this.Search.Size = new System.Drawing.Size(799, 512);
             this.Search.TabIndex = 0;
             this.Search.Text = "Search";
+            // 
+            // ButtonExit
+            // 
+            this.ButtonExit.Location = new System.Drawing.Point(318, 460);
+            this.ButtonExit.Name = "ButtonExit";
+            this.ButtonExit.Size = new System.Drawing.Size(79, 35);
+            this.ButtonExit.TabIndex = 4;
+            this.ButtonExit.Text = "Exit";
+            this.ButtonExit.UseVisualStyleBackColor = true;
+            this.ButtonExit.Click += new System.EventHandler(this.ButtonExit_Click);
             // 
             // Setup
             // 
@@ -156,16 +167,6 @@
             this.label1.Size = new System.Drawing.Size(70, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Site selection";
-            // 
-            // ButtonExit
-            // 
-            this.ButtonExit.Location = new System.Drawing.Point(318, 460);
-            this.ButtonExit.Name = "ButtonExit";
-            this.ButtonExit.Size = new System.Drawing.Size(79, 35);
-            this.ButtonExit.TabIndex = 4;
-            this.ButtonExit.Text = "Exit";
-            this.ButtonExit.UseVisualStyleBackColor = true;
-            this.ButtonExit.Click += new System.EventHandler(this.ButtonExit_Click);
             // 
             // SearchForm
             // 

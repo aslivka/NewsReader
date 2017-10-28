@@ -47,7 +47,7 @@ namespace NewsReader
         private void ShowAllButton_Click(object sender, EventArgs e)
         {
             string apiKey = "0392c544d8b147a4ae0ffb4e424a897c";
-            string sortBy = "top";
+            string sortBy = "latest";
             int numberOfSites = selectedSources.Count;
             
             for(int i = 0; i < numberOfSites; i++)
@@ -64,23 +64,21 @@ namespace NewsReader
               DisplaySites(totalSiteList);
         }
 
-        //private void ArticleResultsBox_TextChanged(object sender, EventArgs e)
-        //{
-
-        //}
         private void DisplaySites(List<SiteArticles> sites)
         {
             for (int i = 0; i < sites.Count; i++)
             {
-                ArticleResultsBox.DeselectAll();
-                ArticleResultsBox.SelectionFont = new Font(ArticleResultsBox.SelectionFont, FontStyle.Bold);
-                ArticleResultsBox.AppendText("Source: " + sites[i].getSource() + "\n");
-                int articleCount = sites[i].getArticles().Count;
-                ArticleResultsBox.AppendText(sites[i].DisplayArticles(sites[i].getArticles(), articleCount));
+                if(sites[i].getArticles() != null)
+                {
+                    ArticleResultsBox.DeselectAll();
+                    ArticleResultsBox.SelectionFont = new Font(ArticleResultsBox.SelectionFont, FontStyle.Bold);
+                    ArticleResultsBox.AppendText("Source: " + sites[i].getSource() + "\n");
+                    int articleCount = sites[i].getArticles().Count;
+                    ArticleResultsBox.AppendText(sites[i].DisplayArticles(sites[i].getArticles(), articleCount));
+                }
                 ArticleResultsBox.AppendText("\n");
              }
         }
-
 
         private void SiteSelectionList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -99,6 +97,11 @@ namespace NewsReader
         private void ButtonExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ArticleResultsBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

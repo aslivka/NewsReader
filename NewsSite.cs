@@ -7,6 +7,7 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json;
 using NewsArticle;
+using System.Windows.Forms;
 
 namespace NewsSite
 {
@@ -56,12 +57,19 @@ namespace NewsSite
                 using (WebResponse response = e.Response)
                 {
                     HttpWebResponse httpResponse = (HttpWebResponse)response;
-                    Console.WriteLine("Error code: {0}", httpResponse.StatusCode);
+
+                    string message = "Error code: " + httpResponse.StatusCode.ToString() + "\n";
+                    string caption = "Connection Error";
+                                       
+                    // Displays the MessageBox.
+                    //MessageBox.Show(message, caption, buttons);
 
                     using (Stream data = response.GetResponseStream())
                     {
                         string text = new StreamReader(data).ReadToEnd();
-                        Console.WriteLine(text);
+                        message = message + text;
+                        MessageBoxButtons buttons = MessageBoxButtons.OK;
+                        MessageBox.Show(message, caption, buttons, MessageBoxIcon.Error);
                     }
                 }
             }
