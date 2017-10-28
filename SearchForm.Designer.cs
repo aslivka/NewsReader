@@ -141,6 +141,7 @@
             // 
             // SiteSelectionList
             // 
+            this.SiteSelectionList.CheckOnClick = true;
             this.SiteSelectionList.FormattingEnabled = true;
             this.SiteSelectionList.Items.AddRange(new object[] {
             "Ars Technica",

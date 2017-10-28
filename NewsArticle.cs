@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NewsCollection;
 
-namespace NewsArticle
+namespace NewsCollection
 {
     
-    public interface Article
+    public class Article
     {
-       string Author { get; set; }
-       string Title { get; set; }
-       string Description { get; set; }
-       string ArticleUrl { get; set; }
-       string UrlToImage { get; set; }
-       string PublishedAt { get; set; }
+        public virtual string Author { get; set; }
+        public virtual string Title { get; set; }
+        public virtual string Description { get; set; }
+        public virtual string ArticleUrl { get; set; }
+        //public virtual string UrlToImage { get; set; }
+        //public virtual string PublishedAt { get; set; }
     }
 
     public class ArticleJSON : Article
@@ -23,8 +24,8 @@ namespace NewsArticle
         private string title;
         private string description;
         private string url;
-        private string urlToImage;
-        private string publishedAt;
+        //private string urlToImage;
+        //private string publishedAt;
 
         public ArticleJSON()
         {
@@ -32,11 +33,11 @@ namespace NewsArticle
             title = "";
             description = "";
             url = "";
-            urlToImage = "";
-            publishedAt = "";
+            //urlToImage = "";
+           // publishedAt = "";
         }
 
-        public string Author
+        public override string Author
         {
             get
             {
@@ -47,7 +48,7 @@ namespace NewsArticle
                 author = value;
             }
         }
-        public string Title
+        public override string Title
         {
             get
             {
@@ -59,7 +60,7 @@ namespace NewsArticle
             }
         }
 
-        public string Description
+        public override string Description
         {
             get
             {
@@ -71,7 +72,7 @@ namespace NewsArticle
             }
         }
 
-        public string ArticleUrl
+        public override  string ArticleUrl
         {
             get
             {
@@ -83,30 +84,29 @@ namespace NewsArticle
             }
         }
 
-        public string UrlToImage
-        {
-            get
-            {
-                return urlToImage;
-            }
-            set
-            {
-                urlToImage = value;
-            }
-        }
+        //public override string UrlToImage
+        //{
+        //    get
+        //    {
+        //        return urlToImage;
+        //    }
+        //    set
+        //    {
+        //        urlToImage = value;
+        //    }
+        //}
 
-        public string PublishedAt
-        {
-            get
-            {
-                return publishedAt;
-            }
-            set
-            {
-                publishedAt = value;
-            }
-        }
-
+        //public override string PublishedAt
+        //{
+        //    get
+        //    {
+        //        return publishedAt;
+        //    }
+        //    set
+        //    {
+        //        publishedAt = value;
+        //    }
+        //}
         
     }
 

@@ -6,33 +6,60 @@ using System.Threading.Tasks;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
-using NewsArticle;
+using NewsCollection;
 using System.Windows.Forms;
 
-namespace NewsSite
+namespace NewsCollection
 {
-    class SiteArticles
+      public abstract class SiteData
+    {
+        protected List<ArticleJSON> _articles = new List<ArticleJSON>();
+        protected string _source;
+        protected string _siteUrl;
+
+        virtual public void setSiteUrl(string source, string sortBy) { }
+        virtual public void setSiteUrl(string siteUrl) { }
+        virtual public void downloadArticles() { }
+        virtual public void deserializeArticles() { }
+
+         public List<ArticleJSON> getArticles()
+        {
+            return _articles;
+        }
+        public string getSource()
+        {
+            return _source;
+        }
+        virtual public string DisplayArticles(List<ArticleJSON> articles, int articleCount) { return ""; }
+    }
+
+    public class NewsAPISite : SiteData
     {
         private string _articleData = string.Empty;
-        private string _apiKey;
-        List<ArticleJSON> _articles;
-        string _source, _sortBy;
-
-
+        private string _apiKey = "0392c544d8b147a4ae0ffb4e424a897c";
+        private string _sortBy;
       
-        public void ConnectToSite(string source, string apiKey, string sortBy)
+        public override void setSiteUrl(string source, string sortBy)
         {
             //Creating http url
-            this._source = source;
-            this._sortBy = sortBy;
-            this._apiKey = apiKey;
-            string httpUrl = @"https://newsapi.org/v1/articles?source=" + source + "&sortBy="
-                + sortBy + "&apiKey=" + apiKey;
+            _source = source;
+            _sortBy = sortBy;
+            _siteUrl = @"https://newsapi.org/v1/articles?source=" + _source + "&sortBy="
+                + _sortBy + "&apiKey=" + _apiKey;
+        }
 
-            //Sending HTTP get request
+        public override void setSiteUrl(string siteUrl)
+        {
+            //Creating http url
+            this._siteUrl = siteUrl;
+        }
+
+        public override void downloadArticles()
+        {
+             //Sending HTTP get request
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(httpUrl);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_siteUrl);
 
                 //Enabling decompression
                 request.AutomaticDecompression = DecompressionMethods.GZip;
@@ -61,9 +88,6 @@ namespace NewsSite
                     string message = "Error code: " + httpResponse.StatusCode.ToString() + "\n";
                     string caption = "Connection Error";
                                        
-                    // Displays the MessageBox.
-                    //MessageBox.Show(message, caption, buttons);
-
                     using (Stream data = response.GetResponseStream())
                     {
                         string text = new StreamReader(data).ReadToEnd();
@@ -73,10 +97,9 @@ namespace NewsSite
                     }
                 }
             }
-
          }
 
-         private static string formatJSONList(string strSource, string strStart)
+         private string formatJSONList(string strSource, string strStart)
             {
                 int Start, End;
                 if (strSource.Contains(strStart))
@@ -95,30 +118,21 @@ namespace NewsSite
                 }
             }
 
-
-        public void DownloadArticles()
+        public override void deserializeArticles()
         {
-            _articles = GetDeserializedArticles(_articleData);
+            string FormattedArticleData = formatJSONList(_articleData, "articles");
+            _articles = JsonConvert.DeserializeObject<List<ArticleJSON>>(FormattedArticleData);
         }
 
-        public List<ArticleJSON> GetDeserializedArticles(string articleData)
-        {
-            string FormattedArticleData = formatJSONList(articleData, "articles");
-            //Creating list of Article objects from JSON string data
-             return (JsonConvert.DeserializeObject<List<ArticleJSON>>(FormattedArticleData));
-        }
+        //public List<ArticleJSON> GetDeserializedArticles(string articleData)
+        //{
+        //    //Creating list of Article objects from JSON string data
+        //    string FormattedArticleData = formatJSONList(articleData, "articles");
+        //    List<ArticleJSON> newArticles = JsonConvert.DeserializeObject<List<ArticleJSON>>(FormattedArticleData);
+        //    return newArticles;
+        //}
 
-        public string getSource()
-        {
-            return _source;
-        }
-
-        public List<ArticleJSON> getArticles()
-        {
-            return _articles;
-        }
-        
-        public string DisplayArticles(List<ArticleJSON> articles, int articleCount)
+          public override  string DisplayArticles(List<ArticleJSON> articles, int articleCount)
         {
             System.Text.StringBuilder newText = new System.Text.StringBuilder();
            
@@ -129,8 +143,6 @@ namespace NewsSite
             }
             return newText.ToString();
         }
-
-
 
     }
 }

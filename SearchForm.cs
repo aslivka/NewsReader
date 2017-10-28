@@ -10,8 +10,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
-using NewsArticle;
-using NewsSite;
+using NewsCollection;
 
 namespace NewsReader
 {
@@ -19,7 +18,7 @@ namespace NewsReader
     {
         public string searchResults;
         int siteCount;
-        List<SiteArticles> totalSiteList = new List<SiteArticles>();
+        List<SiteData> totalSiteList = new List<SiteData>();
 
         //Ars Technica
         //BBC News
@@ -41,30 +40,27 @@ namespace NewsReader
         public SearchForm()
         {
             InitializeComponent();
-
         }
 
         private void ShowAllButton_Click(object sender, EventArgs e)
         {
-            string apiKey = "0392c544d8b147a4ae0ffb4e424a897c";
-            string sortBy = "latest";
+            string sortBy = "top";
             int numberOfSites = selectedSources.Count;
             
             for(int i = 0; i < numberOfSites; i++)
             {
-                string articleData = string.Empty;
-                SiteArticles site1 = new SiteArticles();
-                site1.ConnectToSite(selectedSources[i], apiKey, sortBy);
-                site1.DownloadArticles();
-                totalSiteList.Add(site1);
-                
+                SiteData site1 = new NewsAPISite();
+                site1.setSiteUrl(selectedSources[i], sortBy);
+                site1.downloadArticles();
+                site1.deserializeArticles();
+                totalSiteList.Add(site1);              
            }     
 
             siteCount = totalSiteList.Count();
-              DisplaySites(totalSiteList);
+            DisplaySites(totalSiteList);
         }
 
-        private void DisplaySites(List<SiteArticles> sites)
+        private void DisplaySites(List<SiteData> sites)
         {
             for (int i = 0; i < sites.Count; i++)
             {
@@ -79,6 +75,7 @@ namespace NewsReader
                 ArticleResultsBox.AppendText("\n");
              }
         }
+
 
         private void SiteSelectionList_SelectedIndexChanged(object sender, EventArgs e)
         {
