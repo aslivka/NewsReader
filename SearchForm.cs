@@ -17,7 +17,8 @@ namespace NewsReader
     public partial class SearchForm : Form
     {
         public string searchResults;
-        int siteCount;
+        int siteCount = 0;
+        int totalArticleCount = 0;
         List<SiteData> totalSiteList = new List<SiteData>();
 
         //Ars Technica
@@ -35,42 +36,43 @@ namespace NewsReader
                    "the-new-york-times", "reuters", "techcrunch", "techradar",
                     "the-economist", "usa-today"};
        List<string> selectedSources = new List<string>();
-       List<ArticleJSON> articles = new List<ArticleJSON>();
+       //List<ArticleJSON> articles = new List<ArticleJSON>();
 
         public SearchForm()
         {
             InitializeComponent();
+            updateStatusBar();
         }
-
-        private void ShowAllButton_Click(object sender, EventArgs e)
+        private void DownloadFeeds_Click(object sender, EventArgs e)
         {
             string sortBy = "top";
             int numberOfSites = selectedSources.Count;
-            
-            for(int i = 0; i < numberOfSites; i++)
+
+            for (int i = 0; i < numberOfSites; i++)
             {
                 SiteData site1 = new NewsAPISite();
                 site1.setSiteUrl(selectedSources[i], sortBy);
                 site1.downloadArticles();
                 site1.deserializeArticles();
-                totalSiteList.Add(site1);              
-           }     
+                totalSiteList.Add(site1);
+            }
 
             siteCount = totalSiteList.Count();
+            updateStatusBar();
             DisplaySites(totalSiteList);
         }
-
+        
         private void DisplaySites(List<SiteData> sites)
         {
-            for (int i = 0; i < sites.Count; i++)
+            for (int i = 0; i < siteCount; i++)
             {
                 if(sites[i].getArticles() != null)
                 {
                     ArticleResultsBox.DeselectAll();
                     ArticleResultsBox.SelectionFont = new Font(ArticleResultsBox.SelectionFont, FontStyle.Bold);
                     ArticleResultsBox.AppendText("Source: " + sites[i].getSource() + "\n");
-                    int articleCount = sites[i].getArticles().Count;
-                    ArticleResultsBox.AppendText(sites[i].DisplayArticles(sites[i].getArticles(), articleCount));
+                    //int articleCount = sites[i].getArticles().Count;
+                    ArticleResultsBox.AppendText(sites[i].DisplayArticles(sites[i].getArticles()));
                 }
                 ArticleResultsBox.AppendText("\n");
              }
@@ -89,6 +91,7 @@ namespace NewsReader
                 int currentIndex = SiteSelectionList.CheckedIndices[i];
                 selectedSources.Add(allSources[currentIndex]);
             }
+
         }
 
         private void ButtonExit_Click(object sender, EventArgs e)
@@ -100,5 +103,26 @@ namespace NewsReader
         {
 
         }
+
+        private void updateStatusBar()
+        {
+            System.Text.StringBuilder statusText = new System.Text.StringBuilder();
+            updateTotalArticles();
+            statusText.Append("Selected: " + siteCount + " sources.");
+            statusText.Append(" / Downloaded: " + totalArticleCount + " articles.");
+            statusLabel.Text = statusText.ToString();
+        }
+
+        private void updateTotalArticles()
+        {
+            totalArticleCount = 0;
+            for(int i = 0; i < siteCount; i++)
+            {
+                totalArticleCount += totalSiteList[i].getArticleCount();
+            }
+            
+        }
+
+       
     }
 }

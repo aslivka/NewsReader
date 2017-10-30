@@ -18,4 +18,3 @@ C:\Users\artikk\Downloads\Projects\Software\NewsReader\obj\Debug\NewsReader.cspr
 C:\Users\artikk\Downloads\Projects\Software\NewsReader\obj\Debug\NewsReader.csproj.CoreCompileInputs.cache
 C:\Users\artikk\Downloads\Projects\Software\NewsReader\obj\Debug\NewsReader.exe
 C:\Users\artikk\Downloads\Projects\Software\NewsReader\obj\Debug\NewsReader.pdb
-C:\Users\artikk\Downloads\Projects\Software\NewsReader\obj\Debug\NewsReader.csprojResolveAssemblyReference.cache
