@@ -36,7 +36,6 @@ namespace NewsReader
                    "the-new-york-times", "reuters", "techcrunch", "techradar",
                     "the-economist", "usa-today"};
        List<string> selectedSources = new List<string>();
-       //List<ArticleJSON> articles = new List<ArticleJSON>();
 
         public SearchForm()
         {
@@ -78,7 +77,6 @@ namespace NewsReader
              }
         }
 
-
         private void SiteSelectionList_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -119,10 +117,7 @@ namespace NewsReader
             for(int i = 0; i < siteCount; i++)
             {
                 totalArticleCount += totalSiteList[i].getArticleCount();
-            }
-            
+            } 
         }
-
-       
     }
 }

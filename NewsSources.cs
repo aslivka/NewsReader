@@ -22,11 +22,16 @@ namespace NewsCollection
         virtual public void setSiteUrl(string siteUrl) { }
         virtual public void downloadArticles() { }
         virtual public void deserializeArticles() { }
+        virtual public string DisplayArticles(List<ArticleJSON> articles)
+        {
+            return "";
+        }
 
-         public List<ArticleJSON> getArticles()
+        public List<ArticleJSON> getArticles()
         {
             return _articles;
         }
+
         public string getSource()
         {
             return _source;
@@ -36,7 +41,7 @@ namespace NewsCollection
         {
             return _numArticles;
         }
-        virtual public string DisplayArticles(List<ArticleJSON> articles) { return ""; }
+
     }
 
     public class NewsAPISite : SiteData
@@ -126,18 +131,11 @@ namespace NewsCollection
 
         public override void deserializeArticles()
         {
+            //Creating list of Article objects from JSON string data
             string FormattedArticleData = formatJSONList(_articleData, "articles");
             _articles = JsonConvert.DeserializeObject<List<ArticleJSON>>(FormattedArticleData);
             _numArticles = _articles.Count;
         }
-
-        //public List<ArticleJSON> GetDeserializedArticles(string articleData)
-        //{
-        //    //Creating list of Article objects from JSON string data
-        //    string FormattedArticleData = formatJSONList(articleData, "articles");
-        //    List<ArticleJSON> newArticles = JsonConvert.DeserializeObject<List<ArticleJSON>>(FormattedArticleData);
-        //    return newArticles;
-        //}
 
           public override string DisplayArticles(List<ArticleJSON> articles)
         {
