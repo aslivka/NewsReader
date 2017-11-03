@@ -47,6 +47,8 @@ namespace NewsReader
             string sortBy = "top";
             int numberOfSites = selectedSources.Count;
 
+            clearFeedData();
+
             for (int i = 0; i < numberOfSites; i++)
             {
                 SiteData site1 = new NewsAPISite();
@@ -56,13 +58,14 @@ namespace NewsReader
                 totalSiteList.Add(site1);
             }
 
-            siteCount = totalSiteList.Count();
             updateStatusBar();
             DisplaySites(totalSiteList);
         }
         
         private void DisplaySites(List<SiteData> sites)
         {
+            ArticleResultsBox.Clear();
+
             for (int i = 0; i < siteCount; i++)
             {
                 if(sites[i].getArticles() != null)
@@ -70,7 +73,6 @@ namespace NewsReader
                     ArticleResultsBox.DeselectAll();
                     ArticleResultsBox.SelectionFont = new Font(ArticleResultsBox.SelectionFont, FontStyle.Bold);
                     ArticleResultsBox.AppendText("Source: " + sites[i].getSource() + "\n");
-                    //int articleCount = sites[i].getArticles().Count;
                     ArticleResultsBox.AppendText(sites[i].DisplayArticles(sites[i].getArticles()));
                 }
                 ArticleResultsBox.AppendText("\n");
@@ -84,12 +86,12 @@ namespace NewsReader
 
         private void ApplyChanges_Button_Click(object sender, EventArgs e)
         {
+            selectedSources.Clear();
             for (int i = 0; i < SiteSelectionList.CheckedIndices.Count; i++)
             {
                 int currentIndex = SiteSelectionList.CheckedIndices[i];
                 selectedSources.Add(allSources[currentIndex]);
             }
-
         }
 
         private void ButtonExit_Click(object sender, EventArgs e)
@@ -105,19 +107,28 @@ namespace NewsReader
         private void updateStatusBar()
         {
             System.Text.StringBuilder statusText = new System.Text.StringBuilder();
-            updateTotalArticles();
+            siteCount = totalSiteList.Count();
+            updateArticleTotal();
+
             statusText.Append("Selected: " + siteCount + " sources.");
             statusText.Append(" / Downloaded: " + totalArticleCount + " articles.");
             statusLabel.Text = statusText.ToString();
         }
 
-        private void updateTotalArticles()
+        private void updateArticleTotal()
         {
             totalArticleCount = 0;
             for(int i = 0; i < siteCount; i++)
             {
                 totalArticleCount += totalSiteList[i].getArticleCount();
             } 
+        }
+
+        private void clearFeedData()
+        {
+            totalSiteList.Clear();
+            siteCount = 0;
+            updateArticleTotal();
         }
     }
 }
