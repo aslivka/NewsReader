@@ -13,7 +13,7 @@ namespace NewsCollection
 {
       public abstract class SiteData
     {
-        protected List<ArticleJSON> _articles = new List<ArticleJSON>();
+        protected List<Article> _articles = new List<Article>();
         protected string _source;
         protected string _siteUrl;
         protected int _numArticles;
@@ -22,12 +22,12 @@ namespace NewsCollection
         virtual public void setSiteUrl(string siteUrl) { }
         virtual public void downloadArticles() { }
         virtual public void deserializeArticles() { }
-        virtual public string DisplayArticles(List<ArticleJSON> articles)
+        virtual public string DisplayArticles(List<Article> articles)
         {
             return "";
         }
 
-        public List<ArticleJSON> getArticles()
+        public List<Article> getArticles()
         {
             return _articles;
         }
@@ -133,11 +133,16 @@ namespace NewsCollection
         {
             //Creating list of Article objects from JSON string data
             string FormattedArticleData = formatJSONList(_articleData, "articles");
-            _articles = JsonConvert.DeserializeObject<List<ArticleJSON>>(FormattedArticleData);
-            _numArticles = _articles.Count;
+            List<ArticleJSON> newList = JsonConvert.DeserializeObject<List<ArticleJSON>>(FormattedArticleData);
+             _numArticles = newList.Count;
+            for(int i = 0; i < _numArticles; i++)
+            {
+                _articles.Add(newList[i]);
+            }
+            newList.Clear();
         }
 
-          public override string DisplayArticles(List<ArticleJSON> articles)
+          public override string DisplayArticles(List<Article> articles)
         {
             System.Text.StringBuilder newText = new System.Text.StringBuilder();
            
@@ -145,6 +150,7 @@ namespace NewsCollection
             {
                 newText.Append("\n" + (i + 1).ToString() + ": ");
                 newText.Append(articles[i].Title + "\n");
+                newText.Append(articles[i].Url + "\n");
             }
             return newText.ToString();
         }

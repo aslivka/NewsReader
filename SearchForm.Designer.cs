@@ -31,7 +31,7 @@
             this.SearchButton = new System.Windows.Forms.Button();
             this.BtnDownloadFeeds = new System.Windows.Forms.Button();
             this.SearchInputBox = new System.Windows.Forms.TextBox();
-            this.ArticleResultsBox = new System.Windows.Forms.RichTextBox();
+            this.RichTextBox_Results = new System.Windows.Forms.RichTextBox();
             this.tabMenu1 = new System.Windows.Forms.TabControl();
             this.Search = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
@@ -75,14 +75,16 @@
             this.SearchInputBox.Size = new System.Drawing.Size(100, 20);
             this.SearchInputBox.TabIndex = 2;
             // 
-            // ArticleResultsBox
+            // RichTextBox_Results
             // 
-            this.ArticleResultsBox.Location = new System.Drawing.Point(45, 74);
-            this.ArticleResultsBox.Name = "ArticleResultsBox";
-            this.ArticleResultsBox.Size = new System.Drawing.Size(623, 371);
-            this.ArticleResultsBox.TabIndex = 3;
-            this.ArticleResultsBox.Text = "";
-            this.ArticleResultsBox.TextChanged += new System.EventHandler(this.ArticleResultsBox_TextChanged);
+            this.RichTextBox_Results.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RichTextBox_Results.Location = new System.Drawing.Point(45, 74);
+            this.RichTextBox_Results.Name = "RichTextBox_Results";
+            this.RichTextBox_Results.Size = new System.Drawing.Size(623, 371);
+            this.RichTextBox_Results.TabIndex = 3;
+            this.RichTextBox_Results.Text = "";
+            this.RichTextBox_Results.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.RichTextBox_Results_LinkClicked);
+            this.RichTextBox_Results.TextChanged += new System.EventHandler(this.RichTextBoxResults_TextChanged);
             // 
             // tabMenu1
             // 
@@ -104,7 +106,7 @@
             this.Search.Controls.Add(this.ButtonExit);
             this.Search.Controls.Add(this.BtnDownloadFeeds);
             this.Search.Controls.Add(this.SearchInputBox);
-            this.Search.Controls.Add(this.ArticleResultsBox);
+            this.Search.Controls.Add(this.RichTextBox_Results);
             this.Search.Controls.Add(this.SearchButton);
             this.Search.Location = new System.Drawing.Point(4, 22);
             this.Search.Margin = new System.Windows.Forms.Padding(0);
@@ -236,7 +238,7 @@
         private System.Windows.Forms.Button SearchButton;
         private System.Windows.Forms.Button BtnDownloadFeeds;
         private System.Windows.Forms.TextBox SearchInputBox;
-        private System.Windows.Forms.RichTextBox ArticleResultsBox;
+        private System.Windows.Forms.RichTextBox RichTextBox_Results;
         private System.Windows.Forms.TabControl tabMenu1;
         private System.Windows.Forms.TabPage Search;
         private System.Windows.Forms.TabPage Setup;

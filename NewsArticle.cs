@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 using NewsCollection;
 
 namespace NewsCollection
-{
-    
-    public class Article
+{  
+    public abstract class Article
     {
         public virtual string Author { get; set; }
         public virtual string Title { get; set; }
         public virtual string Description { get; set; }
-        public virtual string ArticleUrl { get; set; }
+        public virtual string Url { get; set; }
         //public virtual string UrlToImage { get; set; }
         //public virtual string PublishedAt { get; set; }
     }
@@ -72,7 +71,7 @@ namespace NewsCollection
             }
         }
 
-        public override  string ArticleUrl
+        public override  string Url
         {
             get
             {

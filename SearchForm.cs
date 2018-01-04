@@ -64,18 +64,18 @@ namespace NewsReader
         
         private void DisplaySites(List<SiteData> sites)
         {
-            ArticleResultsBox.Clear();
+            RichTextBox_Results.Clear();
 
             for (int i = 0; i < siteCount; i++)
             {
                 if(sites[i].getArticles() != null)
                 {
-                    ArticleResultsBox.DeselectAll();
-                    ArticleResultsBox.SelectionFont = new Font(ArticleResultsBox.SelectionFont, FontStyle.Bold);
-                    ArticleResultsBox.AppendText("Source: " + sites[i].getSource() + "\n");
-                    ArticleResultsBox.AppendText(sites[i].DisplayArticles(sites[i].getArticles()));
+                    RichTextBox_Results.DeselectAll();
+                    RichTextBox_Results.SelectionFont = new Font(RichTextBox_Results.SelectionFont, FontStyle.Bold);
+                    RichTextBox_Results.AppendText("Source: " + sites[i].getSource() + "\n");
+                    RichTextBox_Results.AppendText(sites[i].DisplayArticles(sites[i].getArticles()));
                 }
-                ArticleResultsBox.AppendText("\n");
+                RichTextBox_Results.AppendText("\n");
              }
         }
 
@@ -97,11 +97,6 @@ namespace NewsReader
         private void ButtonExit_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void ArticleResultsBox_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void updateStatusBar()
@@ -129,6 +124,16 @@ namespace NewsReader
             totalSiteList.Clear();
             siteCount = 0;
             updateArticleTotal();
+        }
+
+        private void RichTextBoxResults_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RichTextBox_Results_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.LinkText);
         }
     }
 }
