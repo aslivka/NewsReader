@@ -1,0 +1,31 @@
+C:\Users\artikk\Downloads\Projects\Software\News Reader\NewsReader\bin\Debug\NewsReader.exe.config
+C:\Users\artikk\Downloads\Projects\Software\News Reader\NewsReader\bin\Debug\NewsReader.exe
+C:\Users\artikk\Downloads\Projects\Software\News Reader\NewsReader\bin\Debug\NewsReader.pdb
+C:\Users\artikk\Downloads\Projects\Software\News Reader\NewsReader\obj\Debug\NewsReader.Properties.Resources.resources
+C:\Users\artikk\Downloads\Projects\Software\News Reader\NewsReader\obj\Debug\NewsReader.csproj.GenerateResource.Cache
+C:\Users\artikk\Downloads\Projects\Software\News Reader\NewsReader\obj\Debug\NewsReader.csproj.CoreCompileInputs.cache
+C:\Users\artikk\Downloads\Projects\Software\News Reader\NewsReader\obj\Debug\NewsReader.exe
+C:\Users\artikk\Downloads\Projects\Software\News Reader\NewsReader\obj\Debug\NewsReader.pdb
+C:\Users\artikk\Downloads\Projects\Software\News Reader\NewsReader\bin\Debug\Newtonsoft.Json.dll
+C:\Users\artikk\Downloads\Projects\Software\News Reader\NewsReader\obj\Debug\NewsReader.SearchForm.resources
+C:\Users\artikk\Downloads\Projects\Software\NewsReader\bin\Debug\NewsReader.exe.config
+C:\Users\artikk\Downloads\Projects\Software\NewsReader\bin\Debug\NewsReader.exe
+C:\Users\artikk\Downloads\Projects\Software\NewsReader\bin\Debug\NewsReader.pdb
+C:\Users\artikk\Downloads\Projects\Software\NewsReader\bin\Debug\Newtonsoft.Json.dll
+C:\Users\artikk\Downloads\Projects\Software\NewsReader\obj\Debug\NewsReader.SearchForm.resources
+C:\Users\artikk\Downloads\Projects\Software\NewsReader\obj\Debug\NewsReader.Properties.Resources.resources
+C:\Users\artikk\Downloads\Projects\Software\NewsReader\obj\Debug\NewsReader.csproj.GenerateResource.Cache
+C:\Users\artikk\Downloads\Projects\Software\NewsReader\obj\Debug\NewsReader.csproj.CoreCompileInputs.cache
+C:\Users\artikk\Downloads\Projects\Software\NewsReader\obj\Debug\NewsReader.exe
+C:\Users\artikk\Downloads\Projects\Software\NewsReader\obj\Debug\NewsReader.pdb
+C:\Users\artikk\Downloads\Projects\Software\NewsReader - Copy\bin\Debug\NewsReader.exe.config
+C:\Users\artikk\Downloads\Projects\Software\NewsReader - Copy\bin\Debug\NewsReader.exe
+C:\Users\artikk\Downloads\Projects\Software\NewsReader - Copy\bin\Debug\NewsReader.pdb
+C:\Users\artikk\Downloads\Projects\Software\NewsReader - Copy\bin\Debug\Newtonsoft.Json.dll
+C:\Users\artikk\Downloads\Projects\Software\NewsReader - Copy\obj\Debug\NewsReader.csprojResolveAssemblyReference.cache
+C:\Users\artikk\Downloads\Projects\Software\NewsReader - Copy\obj\Debug\NewsReader.SearchForm.resources
+C:\Users\artikk\Downloads\Projects\Software\NewsReader - Copy\obj\Debug\NewsReader.Properties.Resources.resources
+C:\Users\artikk\Downloads\Projects\Software\NewsReader - Copy\obj\Debug\NewsReader.csproj.GenerateResource.Cache
+C:\Users\artikk\Downloads\Projects\Software\NewsReader - Copy\obj\Debug\NewsReader.csproj.CoreCompileInputs.cache
+C:\Users\artikk\Downloads\Projects\Software\NewsReader - Copy\obj\Debug\NewsReader.exe
+C:\Users\artikk\Downloads\Projects\Software\NewsReader - Copy\obj\Debug\NewsReader.pdb
