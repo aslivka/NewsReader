@@ -9,19 +9,44 @@ using Newtonsoft.Json;
 
 namespace NewsReader
 {
+     public class BuildInfo
+    {
+        [JsonProperty("Program Version")]
+        private  string _version { get; set; }
+        [JsonProperty("Author")]
+        private  string _author { get; set; }
+        [JsonProperty("Release Date")]
+        private  string _date { get; set; }
+        public BuildInfo()
+        {
+            _version = "1.0.0";
+            _author = "Artem Slivka";
+            _date = "03-24-2018";
+        }
+    }
+
     public class AppSettings
     {
+        public BuildInfo _currentBuildInfo;
         public bool _saveEnabled;
+        public List<string> _rawSources = new List<string>();
+        public List<string> _formSources = new List<string>();
         public List<string> _selectedSources = new List<string>();
+
 
         public AppSettings()
         {
             _saveEnabled = false;
+            _currentBuildInfo = new BuildInfo();
         }
 
         public void SaveSettings(AppSettings currentSettings)
         {
             this._saveEnabled = currentSettings._saveEnabled;
+            this._rawSources = currentSettings.getRawList();
+            this._currentBuildInfo = currentSettings._currentBuildInfo;
+            this._formSources = currentSettings.getFormattedList();
+
             if (_saveEnabled)
             {
                 this._selectedSources = currentSettings._selectedSources;
@@ -30,7 +55,7 @@ namespace NewsReader
             {
                 this._selectedSources.Clear();
             }
-          }
+        }
 
         public void SaveToFile(string fileName)
         {
@@ -38,6 +63,7 @@ namespace NewsReader
             using (StreamWriter file = File.CreateText(filePath))
             {
                 JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
                 serializer.Serialize(file, this);
             }
         }
@@ -50,6 +76,7 @@ namespace NewsReader
                 using (StreamReader file = File.OpenText(filePath))
                 {
                     JsonSerializer serializer = new JsonSerializer();
+                    serializer.Formatting = Formatting.Indented;
                     AppSettings newSettings = (AppSettings)serializer.Deserialize(file, typeof(AppSettings));
                     return newSettings;
                 }
@@ -62,68 +89,16 @@ namespace NewsReader
                 MessageBox.Show(errorText, caption, buttons, MessageBoxIcon.Error);
                 return new AppSettings();
             }       
-        }  
-    }
-    public class SourceCollection
-    {
-        private Sources _sourceList = new Sources();
-
-        //Constructor
-        public SourceCollection()
-        {
-            _sourceList = loadSourcesFromFile(@"\sources.config",_sourceList);
-        }
-
-        public SourceCollection(List<string> raw, List<string> formatted)
-        {
-            _sourceList._rawList = raw;
-            _sourceList._formattedList = formatted;
-        }
-
-        private Sources loadSourcesFromFile(string fileName, Sources newList)
-        {
-            try
-            {
-                string filePath = AppDomain.CurrentDomain.BaseDirectory + fileName;
-                using (StreamReader file = File.OpenText(filePath))
-                {
-                    JsonSerializer serializer = new JsonSerializer();
-                    newList = (Sources)serializer.Deserialize(file, typeof(Sources));
-                }
-            }
-            catch (Exception e)
-            {
-                string errorText = e.ToString();
-                string caption = "Error loading sources.config file";
-                MessageBoxButtons buttons = MessageBoxButtons.OK;
-                MessageBox.Show(errorText, caption, buttons, MessageBoxIcon.Error);   
-            }
-            return newList;
-        }
-
-        public void SaveToFile(string fileName)
-        {
-            string filePath = AppDomain.CurrentDomain.BaseDirectory + fileName;
-            using (StreamWriter file = File.CreateText(filePath))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(file, _sourceList);
-            }
         }
 
         public List<string> getRawList()
         {
-            return _sourceList._rawList;
+            return _rawSources;
         }
         public List<string> getFormattedList()
         {
-            return _sourceList._formattedList;
+            return _formSources;
         }
-
-        private class Sources
-        {
-            public List<string> _rawList = new List<string>();
-            public List<string> _formattedList = new List<string>();
-        }
-    };
+    }
+    
 }

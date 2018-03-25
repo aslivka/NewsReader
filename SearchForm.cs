@@ -18,7 +18,7 @@ namespace NewsReader
     public partial class SearchForm : Form
     {
         public AppSettings currentSettings = new AppSettings();
-        public SourceCollection sourceList = new SourceCollection();
+        //public SourceCollection sourceList = new SourceCollection();
         private string searchResult = String.Empty;
         private int siteCount = 0;
         private  int totalArticleCount = 0;
@@ -26,26 +26,26 @@ namespace NewsReader
 
         public SearchForm()
         {
-            //sourceList.SaveToFile(@"\sources.config");
+            //Loading settings from file
+            LoadSettings();
+
             //Converting from List to object array
-            List<string> newList = sourceList.getFormattedList();
+            List<string> newList = currentSettings.getFormattedList();
             object[] updatedList = newList.Cast<object>().ToArray();
 
             InitializeComponent();
 
-            //Adding sources to selection list
+            //Updating controls to reflect loaded settings
             SiteSelectionList.Items.AddRange(updatedList);
-
-            LoadSettings();
-            updateStatusBar();
+            updateControlSettings();
         }
 
         public void LoadSettings()
         {
             AppSettings loadedSettings = new AppSettings();
             loadedSettings = loadedSettings.LoadFromFile(@"\program.config");
-            currentSettings = loadedSettings;
-            updateControlSettings();
+            currentSettings._currentBuildInfo = new BuildInfo();
+            currentSettings.SaveSettings(loadedSettings);
         }
 
         private void DownloadFeeds_Click(object sender, EventArgs e)
@@ -63,7 +63,6 @@ namespace NewsReader
                 site1.deserializeArticles();
                 totalSiteList.Add(site1);
             }
-
             updateStatusBar();
             DisplaySites(totalSiteList);
         }
@@ -91,21 +90,26 @@ namespace NewsReader
 
         private void ApplyChanges_Button_Click(object sender, EventArgs e)
         {
+            //Adding selected sources and updating controls
             currentSettings._selectedSources.Clear();
+            int currentIndex;
+
             for (int i = 0; i < SiteSelectionList.CheckedIndices.Count; i++)
             {
-                int currentIndex = SiteSelectionList.CheckedIndices[i];
-                currentSettings._selectedSources.Add(sourceList.getRawList()[currentIndex]);
+                currentIndex = SiteSelectionList.CheckedIndices[i];
+                currentSettings._selectedSources.Add(currentSettings.getRawList()[currentIndex]);
             }
+            totalSiteList.Clear();
+            updateStatusBar();
 
+            //Saving settings to file
             currentSettings._saveEnabled = getSaveEnabled();
-
             AppSettings newSettings = new AppSettings();
-            if(currentSettings._saveEnabled)
+            if (currentSettings._saveEnabled)
             {
-               newSettings.SaveSettings(this.currentSettings);       
+                newSettings.SaveSettings(this.currentSettings);
             }
-            newSettings.SaveToFile(@"\program.config");
+            newSettings.SaveToFile(@"\program.config"); 
         }
 
         private void ButtonExit_Click(object sender, EventArgs e)
@@ -120,7 +124,7 @@ namespace NewsReader
         private void updateStatusBar()
         {
             System.Text.StringBuilder statusText = new System.Text.StringBuilder();
-            siteCount = totalSiteList.Count();
+            siteCount = currentSettings._selectedSources.Count;
             updateArticleTotal();
             statusText.Append("Selected: " + siteCount + " sites.");
             statusText.Append(" / Downloaded: " + totalArticleCount + " articles.");
@@ -133,21 +137,26 @@ namespace NewsReader
 
             if (currentSettings._saveEnabled)
             {
+                int currentIndex;
                 //Loading selected sources
                 for (int i = 0; i < currentSettings._selectedSources.Count; i++)
                 {
-                    int currentIndex = sourceList.getRawList().IndexOf(currentSettings._selectedSources[i]);
+                    currentIndex = currentSettings.getRawList().IndexOf(currentSettings._selectedSources[i]);
                     SiteSelectionList.SetItemChecked(currentIndex, true);
                 }
             }
+            updateStatusBar();
         }
 
         private void updateArticleTotal()
         {
-            totalArticleCount = 0;
-            for(int i = 0; i < siteCount; i++)
+            totalArticleCount = 0;    
+            if(totalSiteList.Count > 0)
             {
-                totalArticleCount += totalSiteList[i].getArticleCount();
+                for (int i = 0; i < siteCount; i++)
+                {
+                    totalArticleCount += totalSiteList[i].getArticleCount();
+                }
             } 
         }
 
